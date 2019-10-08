@@ -28,7 +28,7 @@ export default class Login extends Component {
 
     try {
       await Auth.signIn(this.state.email, this.state.password);
-      alert("Logged in");
+      this.props.userHasAuthenticated(true);
     } catch (e) {
       alert(e.message);
     }
@@ -53,8 +53,6 @@ export default class Login extends Component {
           />
           <button type="submit">Login</button>
         </form>
-        <div>Email: {this.state.email}</div>
-        <div>Pass: {this.state.password}</div>
       </div>
     );
   }
