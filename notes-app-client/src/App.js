@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "./App.css";
 import Routes from "./Routes";
 import { LinkContainer } from "react-router-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 class App extends Component {
   render() {
