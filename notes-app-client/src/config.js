@@ -1,4 +1,5 @@
 export default {
+  MAX_ATTACHMENT_SIZE: 5000000,
   s3: {
     REGION: "eu-central-1",
     BUCKET: "budaca-serverless-stack-notes-app-uploads"

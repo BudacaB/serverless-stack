@@ -1,10 +1,10 @@
 import React, { Component, Fragment } from "react";
 import { Link, withRouter } from "react-router-dom";
-import "./App.css";
-import Routes from "./Routes";
 import { LinkContainer } from "react-router-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
+import { Nav, Navbar, NavItem } from "react-bootstrap";
+import Routes from "./Routes";
 import { Auth } from "aws-amplify";
+import "./App.css";
 
 class App extends Component {
   constructor(props) {
@@ -50,19 +50,30 @@ class App extends Component {
     return (
       !this.state.isAuthenticating && (
         <div className="App container">
-          <Link to="/">Scratch</Link>
-          {this.state.isAuthenticated ? (
-            <div onClick={this.handleLogout}>Logout</div>
-          ) : (
-            <Fragment>
-              <LinkContainer to="/signup">
-                <div>Signup</div>
-              </LinkContainer>
-              <LinkContainer to="/login">
-                <div>Login</div>
-              </LinkContainer>
-            </Fragment>
-          )}
+          <Navbar fluid collapseOnSelect>
+            <Navbar.Header>
+              <Navbar.Brand>
+                <Link to="/">Scratch</Link>
+              </Navbar.Brand>
+              <Navbar.Toggle />
+            </Navbar.Header>
+            <Navbar.Collapse>
+              <Nav pullRight>
+                {this.state.isAuthenticated ? (
+                  <NavItem onClick={this.handleLogout}>Logout</NavItem>
+                ) : (
+                  <Fragment>
+                    <LinkContainer to="/signup">
+                      <NavItem>Signup</NavItem>
+                    </LinkContainer>
+                    <LinkContainer to="/login">
+                      <NavItem>Login</NavItem>
+                    </LinkContainer>
+                  </Fragment>
+                )}
+              </Nav>
+            </Navbar.Collapse>
+          </Navbar>
           <Routes childProps={childProps} />
         </div>
       )

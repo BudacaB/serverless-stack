@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import "./Login.css";
-import { Auth } from "aws-amplify";
+import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
+import { Auth } from "aws-amplify";
+import "./Login.css";
 
 export default class Login extends Component {
   constructor(props) {
@@ -20,9 +21,8 @@ export default class Login extends Component {
 
   handleChange = event => {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.id]: event.target.value
     });
-    console.log(this.state.email);
   };
 
   handleSubmit = async event => {
@@ -33,7 +33,6 @@ export default class Login extends Component {
     try {
       await Auth.signIn(this.state.email, this.state.password);
       this.props.userHasAuthenticated(true);
-      this.props.history.push("/");
     } catch (e) {
       alert(e.message);
       this.setState({ isLoading: false });
@@ -44,28 +43,32 @@ export default class Login extends Component {
     return (
       <div className="Login">
         <form onSubmit={this.handleSubmit}>
-          <input
-            label="Email"
-            name="email"
-            type="text"
-            onChange={this.handleChange}
-          />
-
-          <input
-            name="password"
-            label="Password"
-            onChange={this.handleChange}
-            type="text"
-          />
+          <FormGroup controlId="email" bsSize="large">
+            <ControlLabel>Email</ControlLabel>
+            <FormControl
+              autoFocus
+              type="email"
+              value={this.state.email}
+              onChange={this.handleChange}
+            />
+          </FormGroup>
+          <FormGroup controlId="password" bsSize="large">
+            <ControlLabel>Password</ControlLabel>
+            <FormControl
+              value={this.state.password}
+              onChange={this.handleChange}
+              type="password"
+            />
+          </FormGroup>
           <LoaderButton
-            type="submit"
+            block
+            bsSize="large"
             disabled={!this.validateForm()}
+            type="submit"
             isLoading={this.state.isLoading}
             text="Login"
             loadingText="Logging in…"
-          >
-            Login
-          </LoaderButton>
+          />
         </form>
       </div>
     );
